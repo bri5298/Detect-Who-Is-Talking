@@ -1,0 +1,12 @@
+black
+flake8
+pytest
+pytest-cov
+isort
+mypy
+numpy
+pandas
+librosa
+tensorflow
+scikit-learn
+pydub
