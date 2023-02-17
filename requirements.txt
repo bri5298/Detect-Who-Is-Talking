@@ -10,3 +10,5 @@ librosa
 tensorflow
 scikit-learn
 pydub
+matplotlib
+tqdm
