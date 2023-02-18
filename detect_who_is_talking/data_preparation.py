@@ -81,3 +81,9 @@ def prepare_df_for_model(feature):
     feature_array = np.array(feature_list).astype(np.float)
     return feature_array
 
+
+def load_csv_for_model(csv_path):
+    df = pd.read_csv(csv_path).sample(frac=1).reset_index(drop=True)
+    df['feature'] = df['feature'].map(lambda x: prepare_df_for_model(str(x)))
+    df = df.sample(frac=.25).reset_index(drop=True)
+    return df
