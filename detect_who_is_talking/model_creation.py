@@ -14,6 +14,7 @@ from tensorflow.keras.callbacks import ModelCheckpoint
 from tensorflow.keras.utils import to_categorical
 
 
+
 def encode_and_train_test_split(df, save_encoder=True):
     assert list(df.columns) == ['feature', 'class']
     # Split the dataset into independent and dependent dataset
@@ -100,7 +101,7 @@ def predict_single_audio_file(filename, model, labelencoder):
     # Reshape MFCC feature to 2-D array
     mfccs_scaled_features = mfccs_scaled_features.reshape(1, -1)
     # predicted_label=model.predict_classes(mfccs_scaled_features)
-    x_predict=model.predict(mfccs_scaled_features)
+    x_predict=model.predict(mfccs_scaled_features, verbose=0)
     predicted_label=np.argmax(x_predict, axis=1)
     # print(predicted_label)
     prediction_class = labelencoder.inverse_transform(predicted_label)
@@ -118,5 +119,4 @@ def get_labelencoder_from_file(le_filepath):
 def load_model_from_file(model_filepath):
     model = load_model(model_filepath)
     return model
-
 
