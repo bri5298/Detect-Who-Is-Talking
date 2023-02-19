@@ -12,3 +12,4 @@ scikit-learn
 pydub
 matplotlib
 tqdm
+tkinterdnd2

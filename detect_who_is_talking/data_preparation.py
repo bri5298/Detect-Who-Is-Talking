@@ -1,6 +1,7 @@
 import math
 import os
 import re
+
 import librosa
 import numpy as np
 import pandas as pd
@@ -21,7 +22,9 @@ def split_audio_into_files(long_audio_path, short_audios_folder, sec_per_split):
         t1 = from_sec * 1000
         t2 = to_sec * 1000
         split_audio = audio[t1:t2]
-        split_audio.export(os.path.join(short_audios_folder, split_filename), format="wav")
+        split_audio.export(
+            os.path.join(short_audios_folder, split_filename), format="wav"
+        )
         print(str(i) + " Done")
         if i == total_seconds - sec_per_split:
             print("All splited successfully")
@@ -39,8 +42,10 @@ def features_extractor(filepath):
 
 def create_df_from_audio_files(folder_audio_to_add, class_):
     """
-    Takes the folder of little audio files, extracts the features and returns a df with them.
-    :param folder_audio_to_add: The folder that contains all of the little audio files
+    Takes the folder of little audio files, extracts the features
+    and returns a df with them.
+    :param folder_audio_to_add: The folder that contains all of the
+    little audio files
     :param class_ : the class we want to assign to the features
     :return: new dataframe with the audio features and class
     !!! NOTE: The small audio files need to be '.wav' files !!!
@@ -62,12 +67,12 @@ def create_df_from_audio_files(folder_audio_to_add, class_):
 
 
 def append_new_data_to_df(new_df, save_to_csv=False):
-    csv_path = os.path.join('data', 'voice_audio_arrays.csv')
+    csv_path = os.path.join("data", "voice_audio_arrays.csv")
     df = pd.read_csv(csv_path)
     df = df.append(new_df).sample(frac=1).reset_index(drop=True)
-    df['features_str'] = df['feature'].map(lambda x: str(x))
-    df.drop_duplicates(subset='features_str', keep=False, inplace=True)
-    df = df.drop(columns='features_str')
+    df["features_str"] = df["feature"].map(lambda x: str(x))
+    df.drop_duplicates(subset="features_str", keep=False, inplace=True)
+    df = df.drop(columns="features_str")
     df = df.reset_index(drop=True)
     if save_to_csv:
         df.to_csv(csv_path, index=False)
@@ -75,15 +80,15 @@ def append_new_data_to_df(new_df, save_to_csv=False):
 
 
 def prepare_df_for_model(feature):
-    feature = re.sub(r'[\[\]\n]', '', feature)
-    feature_list = feature.split(' ')
-    feature_list = [s for s in feature_list if s != '']
+    feature = re.sub(r"[\[\]\n]", "", feature)
+    feature_list = feature.split(" ")
+    feature_list = [s for s in feature_list if s != ""]
     feature_array = np.array(feature_list).astype(np.float)
     return feature_array
 
 
 def load_csv_for_model(csv_path):
     df = pd.read_csv(csv_path).sample(frac=1).reset_index(drop=True)
-    df['feature'] = df['feature'].map(lambda x: prepare_df_for_model(str(x)))
-    df = df.sample(frac=.25).reset_index(drop=True)
+    df["feature"] = df["feature"].map(lambda x: prepare_df_for_model(str(x)))
+    df = df.sample(frac=0.25).reset_index(drop=True)
     return df
