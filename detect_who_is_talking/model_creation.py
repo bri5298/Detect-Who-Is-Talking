@@ -29,7 +29,7 @@ def encode_and_train_test_split(df, save_encoder=True):
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.2, random_state=0
     )
-    return X_train, X_test, y_train, y_test
+    return X_train, X_test, y_train, y_test, labelencoder
 
 
 def create_model(y):
@@ -104,7 +104,6 @@ def predict_single_audio_file(filename, model, labelencoder):
     mfccs_scaled_features = np.mean(mfccs_features.T, axis=0)
     # Reshape MFCC feature to 2-D array
     mfccs_scaled_features = mfccs_scaled_features.reshape(1, -1)
-    # predicted_label=model.predict_classes(mfccs_scaled_features)
     x_predict = model.predict(mfccs_scaled_features, verbose=0)
     predicted_label = np.argmax(x_predict, axis=1)
     # print(predicted_label)
