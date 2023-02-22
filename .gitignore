@@ -1,7 +1,8 @@
 .idea
-data
+data/*
+!data/voice_audio_arrays_quarter.csv
 test_notebooks
 notebooks/.ipynb_checkpoints
-notebooks/_trash
+_trash
 detect_who_is_talking/__pycache__
 results
