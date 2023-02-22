@@ -40,7 +40,7 @@ def features_extractor(filepath):
     return mfccs_scaled_features
 
 
-def create_df_from_audio_files(folder_audio_to_add, class_):
+def create_df_from_audio_split_files(folder_audio_to_add, class_):
     """
     Takes the folder of little audio files, extracts the features
     and returns a df with them.

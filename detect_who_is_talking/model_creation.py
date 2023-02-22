@@ -106,9 +106,7 @@ def predict_single_audio_file(filename, model, labelencoder):
     mfccs_scaled_features = mfccs_scaled_features.reshape(1, -1)
     x_predict = model.predict(mfccs_scaled_features, verbose=0)
     predicted_label = np.argmax(x_predict, axis=1)
-    # print(predicted_label)
     prediction_class = labelencoder.inverse_transform(predicted_label)
-    # print(f'\nPrediction is: {prediction_class[0]}')
     return prediction_class[0]
 
 
