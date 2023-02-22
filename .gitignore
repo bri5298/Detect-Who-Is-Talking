@@ -1,5 +1,7 @@
 .idea
 data
 test_notebooks
-__pycache__
 notebooks/.ipynb_checkpoints
+notebooks/_trash
+detect_who_is_talking/__pycache__
+results
