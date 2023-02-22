@@ -14,4 +14,4 @@ trains the model with the data and uses it to identify when each person is talki
   - Audio Classification - Individual Clips.ipynb: From start to finish the notebook takes files of people talking 
 alone, trains the model with the data and can make a prediction of which person is talking in an audio file.  
 - Data: Data used for training and testing the model.
-- Models: Where we save the models and labelencoders
+- Models: Where we save the models and labelencoders.
