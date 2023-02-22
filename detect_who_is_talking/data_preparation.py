@@ -40,7 +40,7 @@ def features_extractor(filepath):
     return mfccs_scaled_features
 
 
-def create_df_from_audio_split_files(folder_audio_to_add, class_):
+def create_df_from_audio_split_files(folder_audio_to_add, class_, save_csv_path):
     """
     Takes the folder of little audio files, extracts the features
     and returns a df with them.
@@ -51,31 +51,29 @@ def create_df_from_audio_split_files(folder_audio_to_add, class_):
     !!! NOTE: The small audio files need to be '.wav' files !!!
     """
     extracted_features = []
-    # print(class_)
     for fname in os.listdir(os.path.join(folder_audio_to_add)):
-        # print(fname)
         if not fname.endswith(".wav"):
             continue
         filepath = os.path.join(folder_audio_to_add, fname)
-        #         print(filepath)
         data = features_extractor(filepath)
         extracted_features.append([data, class_])
     # converting extracted_features to Pandas dataframe
     new_df = pd.DataFrame(extracted_features, columns=["feature", "class"])
     new_df = new_df.sample(frac=1).reset_index(drop=True)
+    if save_csv_path:
+        new_df.to_csv(save_csv_path, index=False)
     return new_df
 
 
-def append_new_data_to_df(new_df, save_to_csv=False):
-    csv_path = os.path.join("data", "voice_audio_arrays.csv")
-    df = pd.read_csv(csv_path)
+def append_new_data_to_df(new_df, current_csv_path, save_to_csv=False):
+    df = pd.read_csv(current_csv_path)
     df = df.append(new_df).sample(frac=1).reset_index(drop=True)
     df["features_str"] = df["feature"].map(lambda x: str(x))
     df.drop_duplicates(subset="features_str", keep=False, inplace=True)
     df = df.drop(columns="features_str")
     df = df.reset_index(drop=True)
     if save_to_csv:
-        df.to_csv(csv_path, index=False)
+        df.to_csv(current_csv_path, index=False)
     return df
 
 
