@@ -1,6 +1,6 @@
 .idea
 data/*
-!data/voice_audio_arrays_quarter.csv
+!data/train_data_audio_classification.csv
 test_notebooks
 notebooks/.ipynb_checkpoints
 _trash
